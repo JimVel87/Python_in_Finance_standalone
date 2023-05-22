@@ -22,6 +22,13 @@ def Basel_1_min_capital(asset_value, asset_type):
     else: RWA = asset_value * non_mortgage_RW;
     return RWA * CAR;
 
+def is_float(string): # function to check if input is a number (int or float)
+    try:
+        float(string); # try converting the string to float
+        return True; # if successful, return true
+    except ValueError:
+        return False; # otherwise, return false
+
 # The window
 root = TK.Tk(); # creates the root (main) window
 root.title("Basel 1 minimum capital requirements");
@@ -47,11 +54,10 @@ req_val.place(x=270, y=140);
 
 # The calculation function
 def calc_req():
-    the_asset_val = val_entry.get(); # retrieve the value from val_entry    
-    if the_asset_val.isnumeric():
-        req_val.config(text = Basel_1_min_capital(float(the_asset_val),asset_type.get()));
+    if is_float(val_entry.get()):
+        req_val.config(text = Basel_1_min_capital(float(val_entry.get()),asset_type.get()));
     else:
-        req_val.config(text = 'Asset value must be an unsigned number!');
+        req_val.config(text = 'Asset value must be a number!');
 
 # The button
 calc_button = TK.Button(root, text='Calculate requirement', command=calc_req); # creates a button that calls the calc function
